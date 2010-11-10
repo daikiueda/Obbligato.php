@@ -17,7 +17,6 @@
 			}
 		}
 
-		//include("." . $_SERVER["REDIRECT_URL"]);
 		include("template/content.html");
 	}
 	init();
