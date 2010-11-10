@@ -10,9 +10,16 @@
 		define("PAGE",  "." . $_SERVER["REDIRECT_URL"]);
 
 		include("php-lib/simplehtmldom/simple_html_dom.php");
-		function write( $text, $query ){
-			$data = file_get_html($text);
-			foreach( $data->find($query) as $element ){
+
+		$dom_files_cash = array();
+		function write( $filepath, $selector ){
+			global $dom_files_cash;
+
+			if( !isset($dom_files_cash[$filepath]) ){
+				$dom_files_cash[$filepath] = file_get_html($filepath);
+			}
+
+			foreach( $dom_files_cash[$filepath]->find($selector) as $element ){
 				echo $element->innertext;
 			}
 		}
