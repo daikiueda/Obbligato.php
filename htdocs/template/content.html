@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+
+		<title><?php write(PAGE,"title") ?> | <?php write(ROOT,"title") ?></title>
+	</head>
+	<body>
+		<header>
+			<h1><?php write(ROOT,"h1") ?></h1>
+		</header>
+	
+		<article>
+			<?php write(PAGE,"article") ?>
+		</article>
+
+		<aside>
+			<?php write(INDEX,"aside") ?>
+			<?php write(PAGE,"aside") ?>
+			<p>common massage</p>
+		</aside>
+
+		<footer>
+			<small>&copy;2010</small>
+		</footer>
+	</body>
+</html>
