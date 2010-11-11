@@ -7,6 +7,13 @@
 			return;
 		}
 
+		if( is_file( PATH_CASHDIR . $_SERVER["REDIRECT_URL"] ) ){
+			if( filemtime( $_SERVER["DOCUMENT_ROOT"] . $_SERVER["REDIRECT_URL"] ) < filemtime( PATH_CASHDIR . $_SERVER["REDIRECT_URL"] ) ){
+				readfile( PATH_CASHDIR . $_SERVER["REDIRECT_URL"] );
+				return;
+			}
+		}
+
 		define("ROOT",  "/index.html" );
 		define("INDEX", preg_replace("/\/[^\/]+$/","/index.html",$_SERVER["REDIRECT_URL"]) );
 		define("PAGE",  $_SERVER["REDIRECT_URL"]);
@@ -31,6 +38,14 @@
 		$page_data = ob_get_contents();
 		ob_end_clean();
 
+		$target_dir = preg_replace( "/\/[^\/]+$/","/", PATH_CASHDIR . $_SERVER["REDIRECT_URL"] );
+		if( !is_dir( $target_dir ) ){
+			mkdir( $target_dir, 0777, true );
+		}
+
+		$cash_file_handle = fopen( PATH_CASHDIR . $_SERVER["REDIRECT_URL"], "w+");
+		fwrite( $cash_file_handle, $page_data );
+	
 		echo $page_data;
 	}
 	init();
