@@ -24,7 +24,12 @@
 			}
 		}
 
-		include("template/content.html");
+		ob_start();
+		include "template/content.html";
+		$page_data = ob_get_contents();
+		ob_end_clean();
+
+		echo $page_data;
 	}
 	init();
 ?>
