@@ -1,22 +1,24 @@
 <?php
+	require_once("config.php");
+
 	function init(){
-		if( !is_file( "." . $_SERVER["REDIRECT_URL"] ) ){
+		if( !is_file( $_SERVER["DOCUMENT_ROOT"] . $_SERVER["REDIRECT_URL"] ) ){
 			header("HTTP/1.1 404 Not Found");
 			return;
 		}
 
-		define("ROOT",  "./index.html" );
-		define("INDEX", "." . preg_replace("/\/[^\/]+$/","/index.html",$_SERVER["REDIRECT_URL"]) );
-		define("PAGE",  "." . $_SERVER["REDIRECT_URL"]);
+		define("ROOT",  "/index.html" );
+		define("INDEX", preg_replace("/\/[^\/]+$/","/index.html",$_SERVER["REDIRECT_URL"]) );
+		define("PAGE",  $_SERVER["REDIRECT_URL"]);
 
-		include("php-lib/simplehtmldom/simple_html_dom.php");
+		include(PATH_SIMPLEHTMLDOM);
 
 		$dom_files_cash = array();
 		function write( $filepath, $selector ){
 			global $dom_files_cash;
 
 			if( !isset($dom_files_cash[$filepath]) ){
-				$dom_files_cash[$filepath] = file_get_html($filepath);
+				$dom_files_cash[$filepath] = file_get_html($_SERVER["DOCUMENT_ROOT"] . "/" . $filepath);
 			}
 
 			foreach( $dom_files_cash[$filepath]->find($selector) as $element ){
