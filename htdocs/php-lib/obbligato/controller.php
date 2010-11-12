@@ -8,7 +8,10 @@
 		}
 
 		if( is_file( PATH_CASHDIR . $_SERVER["REDIRECT_URL"] ) ){
-			if( filemtime( $_SERVER["DOCUMENT_ROOT"] . $_SERVER["REDIRECT_URL"] ) < filemtime( PATH_CASHDIR . $_SERVER["REDIRECT_URL"] ) ){
+			if(
+				( filemtime( $_SERVER["DOCUMENT_ROOT"] . $_SERVER["REDIRECT_URL"] ) < filemtime( PATH_CASHDIR . $_SERVER["REDIRECT_URL"] ) ) &&
+				( filemtime( "template/content.html" ) < filemtime( PATH_CASHDIR . $_SERVER["REDIRECT_URL"] ) )
+			){
 				readfile( PATH_CASHDIR . $_SERVER["REDIRECT_URL"] );
 				return;
 			}

@@ -1,0 +1,134 @@
+	body {
+		padding: 0; margin: 0;
+		background: #333;
+		color: #333;
+	}
+
+	body > header {
+		display: block;
+		padding: 20px 20px 10px;
+
+		background: #fff;
+	}
+	body > header h1 {
+		margin: 0; padding: 0;
+	}
+	body > header h1 a {
+		color: #333;
+		text-decoration: none;
+	}
+
+	body > nav {
+		display: block;
+		margin-bottom: 20px;
+		background: #f3ecd8;
+
+		box-shadow: inset 0px 2px 2px rgba(0,0,0,0.4);
+		-moz-box-shadow: inset 0px 2px 2px rgba(0,0,0,0.4);
+		-webkit-box-shadow: inset 0px 2px 2px rgba(0,0,0,0.4);
+	}
+	body > nav ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	body > nav ul:after {
+		content: ".";
+		height: 0; display: block; visibility: hidden;
+		clear: both;
+	}
+	body > nav ul li {
+		float: left;
+	}
+	body > nav ul li a {
+		display: block;
+		padding: 10px 20px;
+
+		color: #333;
+		text-decoration: none;
+	}
+	body > nav ul li a:hover {
+	}
+
+	body > #body_text {
+		float: left;
+		width: 100%;
+		margin-right: -280px;
+	}
+	body > #body_text article {
+		display: block;
+		margin: 0 20px;
+		margin-right: 280px;
+		padding: 20px;
+
+		border-radius: 10px;
+		-moz-border-radius: 10px;
+		-webkit-border-radius: 10px;
+
+		background: #fff;
+		box-shadow: 0px 0px 10px rgba(255,255,255,0.4);
+		-moz-box-shadow: 0px 0px 10px rgba(255,255,255,0.4);
+		-webkit-box-shadow: 0px 0px 10px rgba(255,255,255,0.4);
+	}
+	body > #body_text article section {
+		display: block;
+	}
+
+	body > #body_text article > section {
+		margin-top: 3em;
+		padding: 0 0 0 10px;
+	}
+	body > #body_text article > section > section {
+		margin-top: 2em;
+		padding: 0 0 0 10px;
+	}
+
+	body > #body_text article h1 {
+		margin-top: 0;
+	}
+	body > #body_text article h2 {
+		margin: 0 0 0 -10px;
+		padding: 5px 10px;
+		background: #f3ecd8;
+	}
+	body > #body_text article h3 {
+		margin: 0 0 0 -20px;
+		padding-left: 5px;
+		border-left: solid 15px #f3ecd8;
+
+	}
+
+	body > aside {
+		float: right;
+		display: block;
+		width: 200px;
+		margin: 0 20px 0 0;
+		padding: 20px;
+
+		border-radius: 5px;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+
+		background: #fff;
+		box-shadow: 0px 0px 10px rgba(255,255,255,0.4);
+		-moz-box-shadow: 0px 0px 10px rgba(255,255,255,0.4);
+		-webkit-box-shadow: 0px 0px 10px rgba(255,255,255,0.4);
+	}
+	body > aside ul {
+		margin: 0 0 1em;
+		padding: 0 0 0 1em;
+	}
+	body > aside > *:last-child,
+	body > aside > *:last-child *:last-child {
+		margin-bottom: 0;
+	}
+
+	body > footer {
+		display: block;
+		padding: 20px;
+
+		clear: both;
+
+		text-align: center;
+		color: #fff;
+	}
