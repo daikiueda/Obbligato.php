@@ -25,15 +25,22 @@
 		include(PATH_SIMPLEHTMLDOM);
 
 		$dom_files_cash = array();
-		function write( $filepath, $selector ){
+		function write( $filepath, $selector, $write_outertext = false ){
 			global $dom_files_cash;
 
 			if( !isset($dom_files_cash[$filepath]) ){
 				$dom_files_cash[$filepath] = file_get_html($_SERVER["DOCUMENT_ROOT"] . $filepath);
 			}
 
-			foreach( $dom_files_cash[$filepath]->find($selector) as $element ){
-				echo $element->innertext;
+			if( $write_outertext ){
+				foreach( $dom_files_cash[$filepath]->find($selector) as $element ){
+					echo $element->outertext;
+				}
+			}
+			else {
+				foreach( $dom_files_cash[$filepath]->find($selector) as $element ){
+					echo $element->innertext;
+				}
 			}
 		}
 
