@@ -114,6 +114,19 @@
 		-moz-box-shadow: 0px 0px 10px rgba(255,255,255,0.4);
 		-webkit-box-shadow: 0px 0px 10px rgba(255,255,255,0.4);
 	}
+
+	body > aside > section {
+		display: block;
+		margin-top: 1.5em;
+	}
+	body > aside > section:first-child {
+		margin-top: 0;
+	}
+
+	body > aside h2 {
+		margin: 0;
+	}
+
 	body > aside ul {
 		margin: 0 0 1em;
 		padding: 0 0 0 1em;

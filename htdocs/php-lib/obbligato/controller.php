@@ -17,9 +17,10 @@
 			}
 		}
 
-		define("ROOT",  "/index.html" );
-		define("INDEX", preg_replace("/\/[^\/]+$/","/index.html",$_SERVER["REDIRECT_URL"]) );
 		define("PAGE",  $_SERVER["REDIRECT_URL"]);
+		define("INDEX", preg_replace("/\/[^\/]+$/","/index.html",$_SERVER["REDIRECT_URL"]) );
+		define("PARENT", preg_replace("/[^\/]+\/[^\/]+$/","index.html",$_SERVER["REDIRECT_URL"]) );
+		define("ROOT",  "/index.html" );
 
 		include(PATH_SIMPLEHTMLDOM);
 
@@ -28,7 +29,7 @@
 			global $dom_files_cash;
 
 			if( !isset($dom_files_cash[$filepath]) ){
-				$dom_files_cash[$filepath] = file_get_html($_SERVER["DOCUMENT_ROOT"] . "/" . $filepath);
+				$dom_files_cash[$filepath] = file_get_html($_SERVER["DOCUMENT_ROOT"] . $filepath);
 			}
 
 			foreach( $dom_files_cash[$filepath]->find($selector) as $element ){

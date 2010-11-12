@@ -20,14 +20,31 @@
 
 		<div id="body_text">
 			<article>
-				<?php write(PAGE,"article") ?>
+<?php
+	write(PAGE,"article")
+?>
 			</article>
 		</div>
 
 		<aside>
-			<?php write(INDEX,"aside") ?>
-			<?php write(PAGE,"aside") ?>
-			<p>common massage</p>
+			<section>
+				<h2>Local Nav</h2>
+<?php
+	write(PARENT,"aside nav");
+?>
+			</section>
+
+			<section>
+				<h2>Aside Info</h2>
+<?php
+	if( INDEX != PAGE ){
+		write(INDEX,"aside nav");
+	}
+?>
+<?php
+	write(PAGE,"aside")
+?>
+			</section>
 		</aside>
 
 		<footer>
