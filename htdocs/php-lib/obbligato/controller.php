@@ -39,17 +39,19 @@
 
 				$arr_base_file_dir_path = explode( "/", $base_file_dir_path );
 				$arr_inc_file_dir_path  = explode( "/", $inc_file_dir_path );
+				array_shift( $arr_base_file_dir_path );
+				array_shift( $arr_inc_file_dir_path );
 				$arr_base_file_dir_path_buffer = array();
 				$arr_inc_file_dir_path_buffer  = array();
 
-				for( $depth = 0; $depth < count($arr_base_file_dir_path); $depth++ ){
-					if( $arr_base_file_dir_path[$depth] != $arr_inc_file_dir_path[$depth] ){
+				for( $depth = 0; count($arr_base_file_dir_path) > 0; $depth++ ){
+					if( $arr_base_file_dir_path[0] != $arr_inc_file_dir_path[0] ){
 						break;
 					}
 					$arr_base_file_dir_path_buffer = array_shift($arr_base_file_dir_path);
 					$arr_inc_file_dir_path_buffer  = array_shift($arr_inc_file_dir_path);
 				}
-
+/*
 var_dump( $depth );
 echo '<br>$arr_base_file_dir_path : ';
 var_dump( $arr_base_file_dir_path );
@@ -61,8 +63,26 @@ echo '<br>$arr_inc_file_dir_path_buffer : ';
 var_dump( $arr_inc_file_dir_path_buffer );
 echo '<br>';
 
+echo '<br>$arr_base_file_dir_path : ', count( $arr_base_file_dir_path );
+echo '<br>$arr_inc_file_dir_path : ', count( $arr_inc_file_dir_path );
+echo '<br>$arr_base_file_dir_path_buffer : ', count( $arr_base_file_dir_path_buffer );
+echo '<br>$arr_inc_file_dir_path_buffer : ', count( $arr_inc_file_dir_path_buffer );
+echo '<br>';
+*/
+
+
+				$up_count = count( $arr_base_file_dir_path ) - count( $arr_inc_file_dir_path );
+
+				$temp_str = "";
+				for( $i=0; $i<$up_count; $i++ ){
+					$temp_str .= "../";
+				}
+
 				foreach( $dom_files_cash[$filepath]->find('a[href]') as $element ){
-//					echo $element->getAttribute("href"), "<br>", PHP_EOL;
+					$test_href_attr = $element->getAttribute("href");
+					if( !preg_match( '/^(http:\/\/|https:\/\/|\/)/', $test_href_attr ) ){
+						$element->setAttribute( "href", $temp_str . $test_href_attr );
+					}
 				}
 			}
 
