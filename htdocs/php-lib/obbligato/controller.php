@@ -7,7 +7,7 @@
 			return;
 		}
 
-		if( is_file( PATH_CASHDIR . $_SERVER["REDIRECT_URL"] ) ){
+		if( false && is_file( PATH_CASHDIR . $_SERVER["REDIRECT_URL"] ) ){
 			if(
 				( filemtime( $_SERVER["DOCUMENT_ROOT"] . $_SERVER["REDIRECT_URL"] ) < filemtime( PATH_CASHDIR . $_SERVER["REDIRECT_URL"] ) ) &&
 				( filemtime( "template/content.html" ) < filemtime( PATH_CASHDIR . $_SERVER["REDIRECT_URL"] ) )
@@ -30,6 +30,40 @@
 
 			if( !isset($dom_files_cash[$filepath]) ){
 				$dom_files_cash[$filepath] = file_get_html($_SERVER["DOCUMENT_ROOT"] . $filepath);
+			}
+
+			$base_file_dir_path = preg_replace("/\/[^\/]+$/","/",PAGE);
+			$inc_file_dir_path  = preg_replace("/\/[^\/]+$/","/",$filepath);
+
+			if( $base_file_dir_path != $inc_file_dir_path ){
+
+				$arr_base_file_dir_path = explode( "/", $base_file_dir_path );
+				$arr_inc_file_dir_path  = explode( "/", $inc_file_dir_path );
+				$arr_base_file_dir_path_buffer = array();
+				$arr_inc_file_dir_path_buffer  = array();
+
+				for( $depth = 0; $depth < count($arr_base_file_dir_path); $depth++ ){
+					if( $arr_base_file_dir_path[$depth] != $arr_inc_file_dir_path[$depth] ){
+						break;
+					}
+					$arr_base_file_dir_path_buffer = array_shift($arr_base_file_dir_path);
+					$arr_inc_file_dir_path_buffer  = array_shift($arr_inc_file_dir_path);
+				}
+
+var_dump( $depth );
+echo '<br>$arr_base_file_dir_path : ';
+var_dump( $arr_base_file_dir_path );
+echo '<br>$arr_base_file_dir_path_buffer : ';
+var_dump( $arr_base_file_dir_path_buffer );
+echo '<br>$arr_inc_file_dir_path : ';
+var_dump( $arr_inc_file_dir_path );
+echo '<br>$arr_inc_file_dir_path_buffer : ';
+var_dump( $arr_inc_file_dir_path_buffer );
+echo '<br>';
+
+				foreach( $dom_files_cash[$filepath]->find('a[href]') as $element ){
+//					echo $element->getAttribute("href"), "<br>", PHP_EOL;
+				}
 			}
 
 			if( $write_outertext ){
