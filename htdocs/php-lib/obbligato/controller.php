@@ -32,8 +32,8 @@
 				$dom_files_cash[$filepath] = file_get_html($_SERVER["DOCUMENT_ROOT"] . $filepath);
 			}
 
-			$base_file_dir_path = preg_replace("/\/[^\/]+$/","/",PAGE);
-			$inc_file_dir_path  = preg_replace("/\/[^\/]+$/","/",$filepath);
+			$base_file_dir_path = preg_replace("/\/[^\/]+$/","",PAGE);
+			$inc_file_dir_path  = preg_replace("/\/[^\/]+$/","",$filepath);
 
 			if( $base_file_dir_path != $inc_file_dir_path ){
 
@@ -71,10 +71,8 @@ echo '<br>';
 */
 
 
-				$up_count = count( $arr_base_file_dir_path ) - count( $arr_inc_file_dir_path );
-
 				$temp_str = "";
-				for( $i=0; $i<$up_count; $i++ ){
+				for( $i=0; $i<count( $arr_base_file_dir_path ); $i++ ){
 					$temp_str .= "../";
 				}
 
