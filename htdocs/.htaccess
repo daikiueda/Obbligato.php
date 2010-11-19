@@ -1,4 +1,4 @@
 RewriteEngine On
-RewriteBase /
 
+RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule (.*\.html?) /php-lib/obbligato/controller.php
