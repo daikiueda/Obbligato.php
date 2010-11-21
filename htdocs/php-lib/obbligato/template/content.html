@@ -3,12 +3,12 @@
 	<head>
 		<meta charset="UTF-8" />
 
-		<title><?php write(PAGE,"title") ?> | <?php write(ROOT,"title") ?></title>
+		<title><?php $OBBLIGATO->write(PAGE,"title") ?> | <?php $OBBLIGATO->write(ROOT,"title") ?></title>
 		<link rel="stylesheet" type="text/css" href="/common/css/common.css">
 	</head>
 	<body>
 		<header>
-			<h1><a href="/"><?php write(ROOT,"h1") ?></a></h1>
+			<h1><a href="/"><?php $OBBLIGATO->write(ROOT,"h1") ?></a></h1>
 		</header>
 
 		<nav>
@@ -21,7 +21,7 @@
 		<div id="body_text">
 			<article>
 <?php
-	write(PAGE,"article")
+	$OBBLIGATO->write(PAGE,"article")
 ?>
 			</article>
 		</div>
@@ -30,7 +30,7 @@
 			<section>
 				<h2>Local Nav</h2>
 <?php
-	write(PARENT,"aside nav");
+	$OBBLIGATO->write(PARENT,"aside nav");
 ?>
 			</section>
 
@@ -38,11 +38,11 @@
 				<h2>Aside Info</h2>
 <?php
 	if( INDEX != PAGE ){
-		write(INDEX,"aside nav");
+		$OBBLIGATO->write(INDEX,"aside nav");
 	}
 ?>
 <?php
-	write(PAGE,"aside")
+	$OBBLIGATO->write(PAGE,"aside")
 ?>
 			</section>
 		</aside>
