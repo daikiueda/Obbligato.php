@@ -10,11 +10,13 @@
 			exit;
 		}
 
+		/*
 		echo $_SERVER["DOCUMENT_ROOT"] . $_SERVER["REDIRECT_URL"];
 		$test_dom = file_get_html( $_SERVER["DOCUMENT_ROOT"] . $_SERVER["REDIRECT_URL"] );
 		foreach( $test_dom->find("meta") as $element ){
 			echo $element->outertext;
 		}
+		*/
 
 		if( false && is_file( PATH_CASHDIR . $_SERVER["REDIRECT_URL"] ) ){
 			if(
