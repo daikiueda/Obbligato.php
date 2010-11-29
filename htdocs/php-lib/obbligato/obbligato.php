@@ -12,8 +12,17 @@ class Obbligato {
 	}
 
 	public function file( $my_file_path ){
+		if( !preg_match( '/^(http:\/\/|https:\/\/|\/)/', $my_file_path ) ){
+			$my_file_path = $this->base_dir_path . "/" . $my_file_path;
+		}
+
 		if( !isset( $this->file_dom_cashes[ $my_file_path ] ) ){
-			$temp_dom = file_get_html( $_SERVER["DOCUMENT_ROOT"] . $my_file_path );
+			if( is_file( $_SERVER["DOCUMENT_ROOT"] . $my_file_path )){
+				$temp_dom = file_get_html( $_SERVER["DOCUMENT_ROOT"] . $my_file_path );
+			} else {
+				$temp_dom = null;
+			}
+
 			$this->file_dom_cashes[ $my_file_path ] =& new ObbligatoDom( $this, $temp_dom, $my_file_path );
 		}
 		return $this->file_dom_cashes[ $my_file_path ];
@@ -28,11 +37,11 @@ class ObbligatoDom {
 	private $file_path = null;
 	private $file_dir_path = null;
 
-	public function __construct( &$my_controller, &$my_dom, $my_file_path = null ){
+	public function __construct( &$my_controller = null, &$my_dom = null, $my_file_path = null ){
 		$this->controller =& $my_controller;
 		$this->html_dom =& $my_dom;
 		
-		if( $my_file_path != null ){
+		if( $html_dom != null && $my_file_path != null ){
 			$this->file_path = $my_file_path;
 			$this->file_dir_path = preg_replace( '/\/[^\/]+$/','', $my_file_path );
 			
@@ -89,6 +98,10 @@ class ObbligatoDom {
 	}
 
 	function write( $my_selector ){
+		if( $this->html_dom == null ){
+			return;
+		}
+
 		foreach( $this->html_dom->find( $my_selector ) as $element ){
 			echo $element->innertext;
 		}
