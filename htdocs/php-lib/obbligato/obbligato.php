@@ -22,7 +22,7 @@ class Obbligato {
 			} else {
 				$temp_dom = null;
 			}
-
+			
 			$this->file_dom_cashes[ $my_file_path ] =& new ObbligatoDom( $this, $temp_dom, $my_file_path );
 		}
 		return $this->file_dom_cashes[ $my_file_path ];
@@ -40,9 +40,9 @@ class ObbligatoDom {
 	public function __construct( &$my_controller = null, &$my_dom = null, $my_file_path = null ){
 		$this->controller =& $my_controller;
 		$this->html_dom =& $my_dom;
-		
-		if( $html_dom != null && $my_file_path != null ){
-			$this->file_path = $my_file_path;
+		$this->file_path = $my_file_path;
+			
+		if( $this->html_dom != null && $this->file_path != null ){
 			$this->file_dir_path = preg_replace( '/\/[^\/]+$/','', $my_file_path );
 			
 			if( $this->file_dir_path != $this->controller->base_dir_path ){
