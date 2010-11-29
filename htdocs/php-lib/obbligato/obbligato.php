@@ -8,23 +8,28 @@ class Obbligato {
 
 	public function __construct(){
 		$this->file_dom_cashes = array();
-		$this->base_dir_path = preg_replace( '/\/[^\/]+$/', '', $_SERVER['REDIRECT_URL'] );
+		$this->base_dir_path = $_SERVER['DOCUMENT_ROOT'] . preg_replace( '/\/[^\/]+$/', '', $_SERVER['REDIRECT_URL'] );
 	}
 
 	public function file( $my_file_path ){
 		if( !preg_match( '/^(http:\/\/|https:\/\/|\/)/', $my_file_path ) ){
 			$my_file_path = $this->base_dir_path . "/" . $my_file_path;
+		} else {
+			$my_file_path = $_SERVER["DOCUMENT_ROOT"] . $my_file_path;
 		}
-
+		
+		$my_file_path = str_replace( '\\', '/', realpath( $my_file_path ) );
+		
 		if( !isset( $this->file_dom_cashes[ $my_file_path ] ) ){
-			if( is_file( $_SERVER["DOCUMENT_ROOT"] . $my_file_path )){
-				$temp_dom = file_get_html( $_SERVER["DOCUMENT_ROOT"] . $my_file_path );
+			if( $my_file_path ){
+				$temp_dom = file_get_html( $my_file_path );
 			} else {
 				$temp_dom = null;
 			}
 			
 			$this->file_dom_cashes[ $my_file_path ] =& new ObbligatoDom( $this, $temp_dom, $my_file_path );
 		}
+		
 		return $this->file_dom_cashes[ $my_file_path ];
 	}
 }
@@ -101,7 +106,7 @@ class ObbligatoDom {
 		if( $this->html_dom == null ){
 			return;
 		}
-
+		
 		foreach( $this->html_dom->find( $my_selector ) as $element ){
 			echo $element->innertext;
 		}
