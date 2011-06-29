@@ -1,12 +1,12 @@
 <?php
 /**
- * OBBLIGATO ƒeƒ“ƒvƒŒ[ƒg–„‚ß‚İ—pƒIƒuƒWƒFƒNƒg
+ * OBBLIGATO ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆåŸ‹ã‚è¾¼ã¿ç”¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
  *
  * @version 0.1
  */
 
 /**
- * OBBLIGATO ƒeƒ“ƒvƒŒ[ƒg–„‚ß‚İ—pƒNƒ‰ƒX
+ * OBBLIGATO ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆåŸ‹ã‚è¾¼ã¿ç”¨ã‚¯ãƒ©ã‚¹
  */
 class Obbligato {
 
@@ -15,7 +15,7 @@ class Obbligato {
   public $base_dir_path = null;
 
   /**
-   * ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+   * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
    */
   public function __construct(){
     $this->file_dom_cashes = array();
@@ -23,13 +23,13 @@ class Obbligato {
   }
 
   /**
-   * ƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
-   * @param $my_file_path ‘ÎÛƒtƒ@ƒCƒ‹‚ÌƒpƒX
+   * ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
+   * @param $my_file_path å¯¾è±¡ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹
    * @return ObbligatoDom
    */
   public function file( $my_file_path ){
 
-    // w’èƒtƒ@ƒCƒ‹‚ÌƒpƒX‚ğ’²®
+    // æŒ‡å®šãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹ã‚’èª¿æ•´
     if( !preg_match( '/^(http:\/\/|https:\/\/|\/)/', $my_file_path ) ){
       $my_file_path = $this->base_dir_path . "/" . $my_file_path;
     } else {
@@ -37,26 +37,26 @@ class Obbligato {
     }
     $my_file_path = str_replace( '\\', '/', realpath( $my_file_path ) );
     
-    // DOM‚ÌƒLƒƒƒbƒVƒ…‚ª–³‚¢ê‡
+    // DOMã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãŒç„¡ã„å ´åˆ
     if( !isset( $this->file_dom_cashes[ $my_file_path ] ) ){
       if( $my_file_path ){
-        // Simple HTML DOM Parser ‚ÅA‘ÎÛƒtƒ@ƒCƒ‹‚©‚çDOM‚ğæ“¾
+        // Simple HTML DOM Parser ã§ã€å¯¾è±¡ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰DOMã‚’å–å¾—
         $temp_dom = file_get_html( $my_file_path );
       } else {
         $temp_dom = null;
       }
       
-      // ƒLƒƒƒbƒVƒ…‚Æ‚µ‚ÄAObbligatoDom‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğŠi”[
+      // ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã¨ã—ã¦ã€ObbligatoDomã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’æ ¼ç´
       $this->file_dom_cashes[ $my_file_path ] =& new ObbligatoDom( $this, $temp_dom, $my_file_path );
     }
     
-    // ObbligatoDomŒ^‚Ìƒf[ƒ^‚ğ•Ô‚·
+    // ObbligatoDomå‹ã®ãƒ‡ãƒ¼ã‚¿ã‚’è¿”ã™
     return $this->file_dom_cashes[ $my_file_path ];
   }
 }
 
 /**
- * OBBLIGATO ƒeƒ“ƒvƒŒ[ƒg“WŠJ—p‚ÌDOM
+ * OBBLIGATO ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆå±•é–‹ç”¨ã®DOM
  */
 class ObbligatoDom {
 
@@ -67,10 +67,10 @@ class ObbligatoDom {
   private $file_dir_path = null;
 
   /**
-   * ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-   * @param $my_controller OBBLIGATOƒIƒuƒWƒFƒNƒg‚ÌQÆ
-   * @param $my_dom Simple HTML DOM Parser‚Å“¾‚ç‚ê‚éDOM
-   * @param $my_file_path ƒtƒ@ƒCƒ‹ƒpƒX
+   * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+   * @param $my_controller OBBLIGATOã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å‚ç…§
+   * @param $my_dom Simple HTML DOM Parserã§å¾—ã‚‰ã‚Œã‚‹DOM
+   * @param $my_file_path ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
    */
   public function __construct( &$my_controller = null, &$my_dom = null, $my_file_path = null ){
     $this->controller =& $my_controller;
@@ -79,53 +79,53 @@ class ObbligatoDom {
       
     if( $this->html_dom != null && $this->file_path != null ){
 
-      // ‘ÎÛƒtƒ@ƒCƒ‹‚ÌƒfƒBƒŒƒNƒgƒŠiƒpƒX–¼j‚ğæ“¾
+      // å¯¾è±¡ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªï¼ˆãƒ‘ã‚¹åï¼‰ã‚’å–å¾—
       $this->file_dir_path = preg_replace( '/\/[^\/]+$/','', $my_file_path );
 
-      // “WŠJŒ³ƒtƒ@ƒCƒ‹‚Æ‘ÎÛƒtƒ@ƒCƒ‹‚ÅAƒfƒBƒŒƒNƒgƒŠiƒpƒX–¼j‚ªˆÙ‚È‚éê‡‚ÍA
-      // DOM’†‚ÌƒpƒX‹Lq‚ğC³
+      // å±•é–‹å…ƒãƒ•ã‚¡ã‚¤ãƒ«ã¨å¯¾è±¡ãƒ•ã‚¡ã‚¤ãƒ«ã§ã€ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªï¼ˆãƒ‘ã‚¹åï¼‰ãŒç•°ãªã‚‹å ´åˆã¯ã€
+      // DOMä¸­ã®ãƒ‘ã‚¹è¨˜è¿°ã‚’ä¿®æ­£
       if( $this->file_dir_path != $this->controller->base_dir_path ){
         
-        // ƒ‹[ƒg‚©‚ç‚ÌƒfƒBƒŒƒNƒgƒŠŠK‘w‚É‚à‚Æ‚Ã‚¢‚ÄA”z—ñ‚ğ¶¬
+        // ãƒ«ãƒ¼ãƒˆã‹ã‚‰ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªéšå±¤ã«ã‚‚ã¨ã¥ã„ã¦ã€é…åˆ—ã‚’ç”Ÿæˆ
         $arr_base_file_dir_path = explode( '/', $this->controller->base_dir_path );
         $arr_inc_file_dir_path  = explode( '/', $this->file_dir_path );
         
-        // ”z—ñ‚Ìæ“ª—v‘f‚ğ”jŠü
+        // é…åˆ—ã®å…ˆé ­è¦ç´ ã‚’ç ´æ£„
         array_shift( $arr_base_file_dir_path );
         array_shift( $arr_inc_file_dir_path );
         
-        // ‡’v‚·‚éŠK‘w‚ğ•ÛŠÇ‚·‚é‚½‚ß‚Ì”z—ñ
+        // åˆè‡´ã™ã‚‹éšå±¤ã‚’ä¿ç®¡ã™ã‚‹ãŸã‚ã®é…åˆ—
         $arr_base_file_dir_path_buffer = array();
         $arr_inc_file_dir_path_buffer  = array();
         
-        // ƒ‹[ƒg‚©‚çˆêŠK‘w‚¸‚Â”äŠr
+        // ãƒ«ãƒ¼ãƒˆã‹ã‚‰ä¸€éšå±¤ãšã¤æ¯”è¼ƒ
         for( $depth = 0; count($arr_base_file_dir_path) > 0; $depth++ ){
-          // ƒfƒBƒŒƒNƒgƒŠ–¼‚É·ˆÙ‚ª‚ ‚ê‚ÎAƒ‹[ƒv‚ğI—¹
+          // ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªåã«å·®ç•°ãŒã‚ã‚Œã°ã€ãƒ«ãƒ¼ãƒ—ã‚’çµ‚äº†
           if( $arr_base_file_dir_path[0] != $arr_inc_file_dir_path[0] ){
             break;
           }
           
-          // ƒfƒBƒŒƒNƒgƒŠ–¼‚É·ˆÙ‚ª–³‚¢ê‡‚ÍA‚»‚ê‚¼‚ê‚ÌƒfƒBƒŒƒNƒgƒŠ–¼‚ğ
-          // ”z—ñ‚É•ÛŠÇ
+          // ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªåã«å·®ç•°ãŒç„¡ã„å ´åˆã¯ã€ãã‚Œãã‚Œã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªåã‚’
+          // é…åˆ—ã«ä¿ç®¡
           $arr_base_file_dir_path_buffer = array_shift($arr_base_file_dir_path);
           $arr_inc_file_dir_path_buffer  = array_shift($arr_inc_file_dir_path);
         }
         
-        // ƒpƒX’²®—p‚Ì•¶š—ñ
+        // ãƒ‘ã‚¹èª¿æ•´ç”¨ã®æ–‡å­—åˆ—
         $temp_str = '';
         
-        // “WŠJŒ³ƒtƒ@ƒCƒ‹‚ÌƒpƒX‚ª”z—ñ’†‚Éc‚Á‚Ä‚¢‚éê‡‚ÍA
-        // ‚»‚Ì”•ªAŠK‘w‚ğã‚°‚éi../j
+        // å±•é–‹å…ƒãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹ãŒé…åˆ—ä¸­ã«æ®‹ã£ã¦ã„ã‚‹å ´åˆã¯ã€
+        // ãã®æ•°åˆ†ã€éšå±¤ã‚’ä¸Šã’ã‚‹ï¼ˆ../ï¼‰
         for( $i=0; $i<count( $arr_base_file_dir_path ); $i++ ){
           $temp_str .= '../';
         }
-        // ‘ÎÛƒtƒ@ƒCƒ‹‚ÌƒpƒX‚ª”z—ñ’†‚Éc‚Á‚Ä‚¢‚éê‡‚ÍA
-        // ‚»‚Ì•ªAŠK‘w‚ğ‚­‚¾‚éB
+        // å¯¾è±¡ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹ãŒé…åˆ—ä¸­ã«æ®‹ã£ã¦ã„ã‚‹å ´åˆã¯ã€
+        // ãã®åˆ†ã€éšå±¤ã‚’ãã ã‚‹ã€‚
         if( count( $arr_inc_file_dir_path ) != 0 ){
           $temp_str .= implode( '/', $arr_inc_file_dir_path ) . "/";
         }
         
-        // <a href="...">‚Ì‘Š‘ÎƒpƒX‹Lq‚É‚Â‚¢‚ÄAŠK‘w‚ğ’²®
+        // <a href="...">ã®ç›¸å¯¾ãƒ‘ã‚¹è¨˜è¿°ã«ã¤ã„ã¦ã€éšå±¤ã‚’èª¿æ•´
         foreach( $this->html_dom->find('a[href]') as $element ){
           $test_href_attr = $element->getAttribute("href");
           if( !preg_match( '/^(http:\/\/|https:\/\/|\/)/', $test_href_attr ) ){
@@ -137,8 +137,8 @@ class ObbligatoDom {
   }
   
   /**
-   * o—Í
-   * @param $my_selector CSSƒZƒŒƒNƒ^[Œ`®‚ÅA‘ÎÛDOM‚ğw’è
+   * å‡ºåŠ›
+   * @param $my_selector CSSã‚»ãƒ¬ã‚¯ã‚¿ãƒ¼å½¢å¼ã§ã€å¯¾è±¡DOMã‚’æŒ‡å®š
    */
   function write( $my_selector ){
     if( $this->html_dom == null ){

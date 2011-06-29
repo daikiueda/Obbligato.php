@@ -1,6 +1,6 @@
 <?php
 /**
- * OBBLIGATO ƒRƒ“ƒgƒ[ƒ‰
+ * OBBLIGATO ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©
  *
  * @version 0.1
  */
@@ -11,7 +11,7 @@
 
 
   /**
-   * ‰Šú‰»
+   * åˆæœŸåŒ–
    */
   function init(){
     if( !is_file( $_SERVER["DOCUMENT_ROOT"] . $_SERVER["REDIRECT_URL"] ) ){
@@ -25,7 +25,7 @@
     //  echo $element->outertext;
     //}
     
-    // ƒLƒƒƒbƒVƒ…ƒtƒ@ƒCƒ‹‚ª‘¶Ý‚µAÅV‚Ìó‘Ô‚Å‚ ‚ê‚ÎA‚»‚ê‚ðo—Í
+    // ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã—ã€æœ€æ–°ã®çŠ¶æ…‹ã§ã‚ã‚Œã°ã€ãã‚Œã‚’å‡ºåŠ›
     if( false && is_file( PATH_CASHDIR . $_SERVER["REDIRECT_URL"] ) ){
       if(
         ( filemtime( $_SERVER["DOCUMENT_ROOT"] . $_SERVER["REDIRECT_URL"] ) < filemtime( PATH_CASHDIR . $_SERVER["REDIRECT_URL"] ) ) &&
@@ -36,23 +36,23 @@
       }
     }
     
-    // ƒeƒ“ƒvƒŒ[ƒg–„‚ßž‚Ý—pƒIƒuƒWƒFƒNƒg
+    // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆåŸ‹ã‚è¾¼ã¿ç”¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     $OBBLIGATO = new Obbligato();
     
-    // ƒeƒ“ƒvƒŒ[ƒg–„‚ßž‚Ý—p’è”
+    // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆåŸ‹ã‚è¾¼ã¿ç”¨å®šæ•°
     define("PAGE",  $_SERVER["REDIRECT_URL"]);
     define("INDEX", preg_replace("/\/[^\/]+$/","/index.html",$_SERVER["REDIRECT_URL"]) );
     define("PARENT", preg_replace("/[^\/]+\/[^\/]+$/","index.html",$_SERVER["REDIRECT_URL"]) );
     define("ROOT",  "/index.html" );
     
-    // ƒy[ƒW\’z
+    // ãƒšãƒ¼ã‚¸æ§‹ç¯‰
     ob_start();
     include "template/content.html";
     $page_data = ob_get_contents();
     ob_end_clean();
     
-    // ƒLƒƒƒbƒVƒ…ƒtƒ@ƒCƒ‹‚ð•Û‘¶
-    // ŠY“–ƒfƒBƒŒƒNƒgƒŠ‚ª‘¶Ý‚µ‚È‚¢ê‡‚ÍAƒfƒBƒŒƒNƒgƒŠ‚ðV‹Kì¬
+    // ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä¿å­˜
+    // è©²å½“ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãŒå­˜åœ¨ã—ãªã„å ´åˆã¯ã€ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’æ–°è¦ä½œæˆ
     $target_dir = preg_replace( "/\/[^\/]+$/","/", PATH_CASHDIR . $_SERVER["REDIRECT_URL"] );
     if( !is_dir( $target_dir ) ){
       mkdir( $target_dir, 0777, true );
@@ -60,7 +60,7 @@
     $cash_file_handle = fopen( PATH_CASHDIR . $_SERVER["REDIRECT_URL"], "w+");
     fwrite( $cash_file_handle, $page_data );
     
-    // o—Í
+    // å‡ºåŠ›
     echo $page_data;
   }
   init();
