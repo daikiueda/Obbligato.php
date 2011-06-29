@@ -3,12 +3,12 @@
 	<head>
 		<meta charset="UTF-8" />
 
-		<title><?php $OBBLIGATO->file(PAGE)->write("title") ?> | <?php $OBBLIGATO->file(ROOT)->write("title") ?></title>
+		<title><?php $OBBLIGATO->file(PAGE)->find("title")->write(); ?> | <?php $OBBLIGATO->file(ROOT)->find("title")->write(); ?></title>
 		<link rel="stylesheet" type="text/css" href="/common/css/common.css">
 	</head>
 	<body>
 		<header>
-			<h1><a href="/"><?php $OBBLIGATO->file(ROOT)->write("h1") ?></a></h1>
+			<h1><a href="/"><?php $OBBLIGATO->file(ROOT)->find("h1")->write() ?></a></h1>
 		</header>
 
 		<nav>
@@ -21,7 +21,7 @@
 		<div id="body_text">
 			<article>
 <?php
-	$OBBLIGATO->file(PAGE)->write("article");
+	$OBBLIGATO->file(PAGE)->find("article")->write();
 ?>
 
 			</article>
@@ -31,7 +31,7 @@
 			<section>
 				<h2>Local Nav</h2>
 <?php
-	$OBBLIGATO->file(PARENT)->write("aside nav");
+	$OBBLIGATO->file(PARENT)->find("aside nav")->write();
 ?>
 			</section>
 
@@ -39,11 +39,11 @@
 				<h2>Aside Info</h2>
 <?php
 	if( INDEX != PAGE ){
-		$OBBLIGATO->file(INDEX)->write("aside nav");
+		$OBBLIGATO->file(INDEX)->find("aside nav")->write();
 	}
 ?>
 <?php
-	$OBBLIGATO->file(PAGE)->write("aside");
+	$OBBLIGATO->file(PAGE)->find("aside")->write();
 ?>
 			</section>
 		</aside>

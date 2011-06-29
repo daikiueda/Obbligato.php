@@ -25,7 +25,7 @@ class Obbligato {
   /**
    * ファイルの読み込み
    * @param $my_file_path 対象ファイルのパス
-   * @return ObbligatoDom
+   * @return ObbligatoFileDom
    */
   public function file( $my_file_path ){
 
@@ -46,24 +46,25 @@ class Obbligato {
         $temp_dom = null;
       }
       
-      // キャッシュとして、ObbligatoDomのインスタンスを格納
-      $this->file_dom_cashes[ $my_file_path ] =& new ObbligatoDom( $this, $temp_dom, $my_file_path );
+      // キャッシュとして、ObbligatoFileDomのインスタンスを格納
+      $this->file_dom_cashes[ $my_file_path ] =& new ObbligatoFileDom( $this, $temp_dom, $my_file_path );
     }
     
-    // ObbligatoDom型のデータを返す
+    // ObbligatoFileDom型のデータを返す
     return $this->file_dom_cashes[ $my_file_path ];
   }
 }
 
 /**
- * OBBLIGATO テンプレート展開用のDOM
+ * OBBLIGATO テンプレート展開用のDOM（ファイル全体）
  */
-class ObbligatoDom {
+class ObbligatoFileDom {
 
   private $controller = null;
 
   private $html_dom = null;
   private $file_path = null;
+
   private $file_dir_path = null;
 
   /**
@@ -137,15 +138,45 @@ class ObbligatoDom {
   }
   
   /**
-   * 出力
+   * 要素の選択
    * @param $my_selector CSSセレクター形式で、対象DOMを指定
+   * @return ObbligatoDom
    */
-  function write( $my_selector ){
+  function find( $my_selector ){
     if( $this->html_dom == null ){
       return;
     }
     
-    foreach( $this->html_dom->find( $my_selector ) as $element ){
+    return new ObbligatoDom( $this->controller, $this->html_dom->find( $my_selector ) );
+  }
+}
+
+
+/**
+ * OBBLIGATO テンプレート展開用のDOM（部分要素）
+ */
+class ObbligatoDom {
+
+  private $controller = null;
+
+  private $html_dom = null;
+
+  /**
+   * コンストラクタ
+   * @param $my_controller OBBLIGATOオブジェクトの参照
+   * @param $my_dom Simple HTML DOM Parserで得られるDOM
+   * @param $my_file_path ファイルパス
+   */
+  public function __construct( &$my_controller = null, &$my_dom = null ){
+    $this->controller =& $my_controller;
+    $this->html_dom =& $my_dom;
+  }
+
+  /**
+   * 出力
+   */
+  public function write(){
+    foreach( $this->html_dom as $element ){
       echo $element->innertext;
     }
   }
