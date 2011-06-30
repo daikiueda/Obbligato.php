@@ -18,6 +18,19 @@
 			</ul>
 		</nav>
 
+		<div id="topicPath">
+<?php
+	foreach( $OBBLIGATO->path() as $index => $title ){
+		if( $index == 0 ){
+			echo 'HOME';
+		}
+		else {
+			echo ' &gt; ' . $title;
+		}
+	}
+?>
+		</div>
+
 		<div id="body_text">
 			<article>
 <?php

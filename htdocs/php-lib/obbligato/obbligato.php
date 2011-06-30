@@ -11,6 +11,7 @@
 class Obbligato {
 
   private $file_dom_cashes = null;
+  private $topic_path_cashes = null;
 
   public $base_dir_path = null;
 
@@ -27,7 +28,7 @@ class Obbligato {
    * @param $my_file_path 対象ファイルのパス
    * @return ObbligatoFileDom
    */
-  public function file( $my_file_path ){
+  public function &file( $my_file_path ){
 
     // 指定ファイルのパスを調整
     if( !preg_match( '/^(http:\/\/|https:\/\/|\/)/', $my_file_path ) ){
@@ -45,13 +46,37 @@ class Obbligato {
       } else {
         $temp_dom = null;
       }
-      
+
       // キャッシュとして、ObbligatoFileDomのインスタンスを格納
       $this->file_dom_cashes[ $my_file_path ] =& new ObbligatoFileDom( $this, $temp_dom, $my_file_path );
     }
     
     // ObbligatoFileDom型のデータを返す
     return $this->file_dom_cashes[ $my_file_path ];
+  }
+
+  /**
+   * ルートからの階層の取得
+   * @return ルートからの階層を配列で表現したもの
+   */
+  public function path(){
+    if( $this->topic_path_cashes == null ){
+      $this->topic_path_cashes = array();
+      
+      // ルート起点のパス階層を配列に格納
+      $arr_target_path = explode( '/', $_SERVER['REDIRECT_URL'] );
+      $str_filename = array_pop( $arr_target_path );
+      
+      $str_pathname =  '';
+      while( count( $arr_target_path ) ){
+        $str_pathname .= '/' . array_shift( $arr_target_path );
+        array_push( $this->topic_path_cashes, $this->file( $str_pathname . '/index.html' )->find('title')->get() );
+      }
+      if( $str_filename != 'index.html' ){
+        array_push( $this->topic_path_cashes, $this->file( $str_pathname . '/' . $str_filename )->find('title')->get() );
+      }
+    }
+    return $this->topic_path_cashes;
   }
 }
 
@@ -173,12 +198,20 @@ class ObbligatoDom {
   }
 
   /**
+   * 抽出
+   */
+  public function get(){
+    $str_text = '';
+    foreach( $this->html_dom as $element ){
+      $str_text .= $element->innertext;
+    }
+    return $str_text;
+  }
+  /**
    * 出力
    */
   public function write(){
-    foreach( $this->html_dom as $element ){
-      echo $element->innertext;
-    }
+    echo $this->get();
   }
 }
 ?>

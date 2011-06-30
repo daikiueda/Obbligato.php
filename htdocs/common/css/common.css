@@ -50,12 +50,17 @@
 	body > nav ul li a:hover {
 	}
 
-	body > #body_text {
+	#topicPath {
+		margin: 20px;
+		color: #fff;
+	}
+
+	#body_text {
 		float: left;
 		width: 100%;
 		margin-right: -280px;
 	}
-	body > #body_text article {
+	#body_text article {
 		display: block;
 		margin: 0 20px;
 		margin-right: 280px;
@@ -70,28 +75,28 @@
 		-moz-box-shadow: 0px 0px 10px rgba(255,255,255,0.4);
 		-webkit-box-shadow: 0px 0px 10px rgba(255,255,255,0.4);
 	}
-	body > #body_text article section {
+	#body_text article section {
 		display: block;
 	}
 
-	body > #body_text article > section {
+	#body_text article > section {
 		margin-top: 3em;
 		padding: 0 0 0 10px;
 	}
-	body > #body_text article > section > section {
+	#body_text article > section > section {
 		margin-top: 2em;
 		padding: 0 0 0 10px;
 	}
 
-	body > #body_text article h1 {
+	#body_text article h1 {
 		margin-top: 0;
 	}
-	body > #body_text article h2 {
+	#body_text article h2 {
 		margin: 0 0 0 -10px;
 		padding: 5px 10px;
 		background: #f3ecd8;
 	}
-	body > #body_text article h3 {
+	#body_text article h3 {
 		margin: 0 0 0 -20px;
 		padding-left: 5px;
 		border-left: solid 15px #f3ecd8;
