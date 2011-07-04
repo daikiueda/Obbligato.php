@@ -20,12 +20,12 @@
 
 		<div id="topicPath">
 <?php
-	foreach( $OBBLIGATO->path() as $index => $title ){
+	foreach( $OBBLIGATO->path() as $index => $dir ){
 		if( $index == 0 ){
-			echo 'HOME';
+			echo '<a href="/">HOME</a>';
 		}
 		else {
-			echo ' &gt; ' . $title;
+			echo ' &gt; ' . '<a href="' . $dir->full_path . '">' . $dir->title . '</a>';
 		}
 	}
 ?>
@@ -62,7 +62,7 @@
 		</aside>
 
 		<footer>
-			<small>&copy;2010</small>
+			<small>&copy;2011</small>
 		</footer>
 	</body>
 </html>

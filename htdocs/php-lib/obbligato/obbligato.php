@@ -6,7 +6,7 @@
  */
 
 /**
- * OBBLIGATO テンプレート埋め込み用クラス
+ * テンプレート埋め込み用クラス
  */
 class Obbligato {
 
@@ -32,6 +32,7 @@ class Obbligato {
 
     // 指定ファイルのパスを調整
     if( !preg_match( '/^(http:\/\/|https:\/\/|\/)/', $my_file_path ) ){
+      // TODO:未完成
       $my_file_path = $this->base_dir_path . "/" . $my_file_path;
     } else {
       $my_file_path = $_SERVER["DOCUMENT_ROOT"] . $my_file_path;
@@ -59,7 +60,7 @@ class Obbligato {
    * ルートからの階層の取得
    * @return ルートからの階層を配列で表現したもの
    */
-  public function path(){
+  public function &path(){
     if( $this->topic_path_cashes == null ){
       $this->topic_path_cashes = array();
       
@@ -70,10 +71,22 @@ class Obbligato {
       $str_pathname =  '';
       while( count( $arr_target_path ) ){
         $str_pathname .= '/' . array_shift( $arr_target_path );
-        array_push( $this->topic_path_cashes, $this->file( $str_pathname . '/index.html' )->find('title')->get() );
+        array_push(
+          $this->topic_path_cashes,
+          new ObbligatoDir(
+            $this->file( $str_pathname . '/index.html' )->find('title')->get(),
+            $str_pathname . '/index.html'
+          )
+        );
       }
       if( $str_filename != 'index.html' ){
-        array_push( $this->topic_path_cashes, $this->file( $str_pathname . '/' . $str_filename )->find('title')->get() );
+        array_push(
+          $this->topic_path_cashes,
+          new ObbligatoDir(
+            $this->file( $str_pathname . '/' . $str_filename )->find('title')->get(),
+            $str_pathname . '/' . $str_filename
+          )
+        );
       }
     }
     return $this->topic_path_cashes;
@@ -81,7 +94,45 @@ class Obbligato {
 }
 
 /**
- * OBBLIGATO テンプレート展開用のDOM（ファイル全体）
+ * ディレクトリ情報を格納するオブジェクト
+ */
+class ObbligatoDir {
+
+  /**
+   * ディレクトリのタイトル：未実装
+   */
+  public $title = null;
+
+  /**
+   * ディレクトリ名：未実装
+   */
+  public $dir_name = null;
+
+  /**
+   * ドキュメントルートからのフルパス名：未実装
+   */
+  public $full_path = null;
+
+  /**
+   * 展開元ページからの相対パス：未実装
+   */
+  public $rel_path = null;
+
+  /**
+   * コンストラクタ
+   */
+  public function __construct( $my_title, $my_full_path ){
+    $this->title = $my_title;
+    $this->dir_name = null;
+    
+    // TODO:パス調整、とりあえず
+    $this->full_path = preg_replace( '/^\/\//', '/', $my_full_path );
+    $this->rel_path = null;
+  }
+}
+
+/**
+ * テンプレート展開用のDOM（ファイル全体）
  */
 class ObbligatoFileDom {
 
@@ -178,7 +229,7 @@ class ObbligatoFileDom {
 
 
 /**
- * OBBLIGATO テンプレート展開用のDOM（部分要素）
+ * テンプレート展開用のDOM（部分要素）
  */
 class ObbligatoDom {
 

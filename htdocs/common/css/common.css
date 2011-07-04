@@ -54,6 +54,9 @@
 		margin: 20px;
 		color: #fff;
 	}
+	#topicPath a {
+		color: #fff;
+	}
 
 	#body_text {
 		float: left;
