@@ -70,12 +70,12 @@ class Obbligato {
       
       $str_pathname =  '';
       while( count( $arr_target_path ) ){
-        $str_pathname .= '/' . array_shift( $arr_target_path );
+        $str_pathname .= array_shift( $arr_target_path ) . '/';
         array_push(
           $this->topic_path_cashes,
           new ObbligatoDir(
-            $this->file( $str_pathname . '/index.html' )->find('title')->get(),
-            $str_pathname . '/index.html'
+            $this->file( $str_pathname . 'index.html' )->find('title')->get(),
+            $str_pathname . 'index.html'
           )
         );
       }
@@ -83,11 +83,12 @@ class Obbligato {
         array_push(
           $this->topic_path_cashes,
           new ObbligatoDir(
-            $this->file( $str_pathname . '/' . $str_filename )->find('title')->get(),
-            $str_pathname . '/' . $str_filename
+            $this->file( $str_pathname . $str_filename )->find('title')->get(),
+            $str_pathname . $str_filename
           )
         );
       }
+      end( $this->topic_path_cashes )->is_last = true;
     }
     return $this->topic_path_cashes;
   }
@@ -99,7 +100,7 @@ class Obbligato {
 class ObbligatoDir {
 
   /**
-   * ディレクトリのタイトル：未実装
+   * ディレクトリのタイトル
    */
   public $title = null;
 
@@ -119,6 +120,11 @@ class ObbligatoDir {
   public $rel_path = null;
 
   /**
+   * 最後の要素であることを示すフラグ
+   */
+  public $is_last = false;
+
+  /**
    * コンストラクタ
    */
   public function __construct( $my_title, $my_full_path ){
@@ -126,7 +132,7 @@ class ObbligatoDir {
     $this->dir_name = null;
     
     // TODO:パス調整、とりあえず
-    $this->full_path = preg_replace( '/^\/\//', '/', $my_full_path );
+    $this->full_path = $my_full_path;
     $this->rel_path = null;
   }
 }

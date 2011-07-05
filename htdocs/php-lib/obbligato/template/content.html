@@ -24,8 +24,10 @@
 		if( $index == 0 ){
 			echo '<a href="/">HOME</a>';
 		}
-		else {
+		else if( !$dir->is_last ) {
 			echo ' &gt; ' . '<a href="' . $dir->full_path . '">' . $dir->title . '</a>';
+		} else {
+			echo ' &gt; ' . $dir->title;
 		}
 	}
 ?>
