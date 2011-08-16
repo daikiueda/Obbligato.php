@@ -184,7 +184,10 @@ class ObbligatoFileDom {
         // ルートから一階層ずつ比較
         for( $depth = 0; count($arr_base_file_dir_path) > 0; $depth++ ){
           // ディレクトリ名に差異があれば、ループを終了
-          if( $arr_base_file_dir_path[0] != $arr_inc_file_dir_path[0] ){
+          if(
+            count($arr_inc_file_dir_path) == 0 ||
+            $arr_base_file_dir_path[0] != $arr_inc_file_dir_path[0]
+          ){
             break;
           }
           
