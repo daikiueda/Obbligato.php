@@ -9,6 +9,6 @@
   define("PATH_SIMPLEHTMLDOM",  "../simplehtmldom/simple_html_dom.php" );
 
   // キャッシュディレクトリ
-  define("PATH_CASHDIR",  "./cash" );
+  define("PATH_CACHEDIR",  "./cache" );
 
 ?>

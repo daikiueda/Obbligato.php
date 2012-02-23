@@ -10,8 +10,8 @@
  */
 class Obbligato {
 
-  private $file_dom_cashes = null;
-  private $topic_path_cashes = null;
+  private $file_dom_caches = null;
+  private $topic_path_caches = null;
 
   public $base_dir_path = null;
 
@@ -19,7 +19,7 @@ class Obbligato {
    * コンストラクタ
    */
   public function __construct(){
-    $this->file_dom_cashes = array();
+    $this->file_dom_caches = array();
     $this->base_dir_path = $_SERVER['DOCUMENT_ROOT'] . preg_replace( '/\/[^\/]+$/', '', $_SERVER['REDIRECT_URL'] );
   }
 
@@ -40,7 +40,7 @@ class Obbligato {
     $my_file_path = str_replace( '\\', '/', realpath( $my_file_path ) );
     
     // DOMのキャッシュが無い場合
-    if( !isset( $this->file_dom_cashes[ $my_file_path ] ) ){
+    if( !isset( $this->file_dom_caches[ $my_file_path ] ) ){
       if( $my_file_path ){
         // Simple HTML DOM Parser で、対象ファイルからDOMを取得
         $temp_dom = file_get_html( $my_file_path );
@@ -49,11 +49,11 @@ class Obbligato {
       }
 
       // キャッシュとして、ObbligatoFileDomのインスタンスを格納
-      $this->file_dom_cashes[ $my_file_path ] = new ObbligatoFileDom( $this, $temp_dom, $my_file_path );
+      $this->file_dom_caches[ $my_file_path ] = new ObbligatoFileDom( $this, $temp_dom, $my_file_path );
     }
     
     // ObbligatoFileDom型のデータを返す
-    return $this->file_dom_cashes[ $my_file_path ];
+    return $this->file_dom_caches[ $my_file_path ];
   }
 
   /**
@@ -61,8 +61,8 @@ class Obbligato {
    * @return ルートからの階層を配列で表現したもの
    */
   public function &path(){
-    if( $this->topic_path_cashes == null ){
-      $this->topic_path_cashes = array();
+    if( $this->topic_path_caches == null ){
+      $this->topic_path_caches = array();
       
       // ルート起点のパス階層を配列に格納
       $arr_target_path = explode( '/', $_SERVER['REDIRECT_URL'] );
@@ -72,7 +72,7 @@ class Obbligato {
       while( count( $arr_target_path ) ){
         $str_pathname .= array_shift( $arr_target_path ) . '/';
         array_push(
-          $this->topic_path_cashes,
+          $this->topic_path_caches,
           new ObbligatoDir(
             $this->file( $str_pathname . 'index.html' )->find('title')->get(),
             $str_pathname . 'index.html'
@@ -81,16 +81,16 @@ class Obbligato {
       }
       if( $str_filename != 'index.html' ){
         array_push(
-          $this->topic_path_cashes,
+          $this->topic_path_caches,
           new ObbligatoDir(
             $this->file( $str_pathname . $str_filename )->find('title')->get(),
             $str_pathname . $str_filename
           )
         );
       }
-      end( $this->topic_path_cashes )->is_last = true;
+      end( $this->topic_path_caches )->is_last = true;
     }
-    return $this->topic_path_cashes;
+    return $this->topic_path_caches;
   }
 }
 

@@ -26,12 +26,12 @@
     //}
     
     // キャッシュファイルが存在し、最新の状態であれば、それを出力
-    if( false && is_file( PATH_CASHDIR . $_SERVER["REDIRECT_URL"] ) ){
+    if( false && is_file( PATH_CACHEDIR . $_SERVER["REDIRECT_URL"] ) ){
       if(
-        ( filemtime( $_SERVER["DOCUMENT_ROOT"] . $_SERVER["REDIRECT_URL"] ) < filemtime( PATH_CASHDIR . $_SERVER["REDIRECT_URL"] ) ) &&
-        ( filemtime( "template/content.html" ) < filemtime( PATH_CASHDIR . $_SERVER["REDIRECT_URL"] ) )
+        ( filemtime( $_SERVER["DOCUMENT_ROOT"] . $_SERVER["REDIRECT_URL"] ) < filemtime( PATH_CACHEDIR . $_SERVER["REDIRECT_URL"] ) ) &&
+        ( filemtime( "template/content.html" ) < filemtime( PATH_CACHEDIR . $_SERVER["REDIRECT_URL"] ) )
       ){
-        readfile( PATH_CASHDIR . $_SERVER["REDIRECT_URL"] );
+        readfile( PATH_CACHEDIR . $_SERVER["REDIRECT_URL"] );
         exit;
       }
     }
@@ -53,11 +53,11 @@
     
     // キャッシュファイルを保存
     // 該当ディレクトリが存在しない場合は、ディレクトリを新規作成
-    $target_dir = preg_replace( "/\/[^\/]+$/","/", PATH_CASHDIR . $_SERVER["REDIRECT_URL"] );
+    $target_dir = preg_replace( "/\/[^\/]+$/","/", PATH_CACHEDIR . $_SERVER["REDIRECT_URL"] );
     if( !is_dir( $target_dir ) ){
       mkdir( $target_dir, 0777, true );
     }
-    $cash_file_handle = fopen( PATH_CASHDIR . $_SERVER["REDIRECT_URL"], "w+");
+    $cash_file_handle = fopen( PATH_CACHEDIR . $_SERVER["REDIRECT_URL"], "w+");
     fwrite( $cash_file_handle, $page_data );
     
     // 出力
