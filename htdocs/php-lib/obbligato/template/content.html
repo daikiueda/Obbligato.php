@@ -20,11 +20,8 @@
 
 		<div id="topicPath">
 <?php
-	foreach( $OBBLIGATO->path() as $index => $dir ){
-		if( $index == 0 ){
-			echo '<a href="/">HOME</a>';
-		}
-		else if( !$dir->is_last ) {
+	foreach( $OBBLIGATO->path( array( "root"=>"HOME" ) ) as $index => $dir ){
+		if( !$dir->is_last ) {
 			echo ' &gt; ' . '<a href="' . $dir->full_path . '">' . $dir->title . '</a>';
 		} else {
 			echo ' &gt; ' . $dir->title;
