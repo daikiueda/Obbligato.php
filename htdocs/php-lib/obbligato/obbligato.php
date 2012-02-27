@@ -10,16 +10,16 @@
  * テンプレート埋め込み用クラス
  */
 class Obbligato {
-	
+
 	/** HTMLファイル全体のDOMのキャッシュを格納する配列 */
 	private $file_dom_caches = null;
-	
+
 	/**  */
 	private $topic_path_caches = null;
-	
+
 	/**  */
 	public $base_file_uri = null;
-	
+
 	/**  */
 	public $base_dir_path = null;
 
@@ -82,8 +82,8 @@ class Obbligato {
 			$str_pathname = '';
 			for( $i = 0, $last = count( $arr_target_path ); $i < $last; $i++ ){
 				$str_pathname .= $arr_target_path[$i] . '/';
-				$title_str = $this->file( $str_pathname . 'index.html' )->find( 'title' )->text(0);
-				
+				$title_str = $this->file( $str_pathname . 'index.html' )->find( 'title' )->text( 0 );
+
 				// キャッシュに格納
 				array_push(
 					$this->topic_path_caches, new ObbligatoDir(
@@ -95,7 +95,7 @@ class Obbligato {
 			if( $str_filename != 'index.html' ){
 				array_push(
 					$this->topic_path_caches, new ObbligatoDir(
-						$this->file( $str_pathname . $str_filename )->find( 'title' )->text(0),
+						$this->file( $str_pathname . $str_filename )->find( 'title' )->text( 0 ),
 						$str_pathname . $str_filename
 					)
 				);
@@ -109,7 +109,7 @@ class Obbligato {
 }
 
 /**
- * ディレクトリ情報を格納するオブジェクト
+ * ディレクトリ情報を格納するクラス
  */
 class ObbligatoDir {
 
@@ -160,7 +160,7 @@ class ObbligatoDir {
 }
 
 /**
- * テンプレート展開用のDOM（ファイル全体）
+ * テンプレート展開用のDOM（ファイル全体）を格納・操作するためのクラス
  */
 class ObbligatoFileDom {
 
@@ -258,7 +258,7 @@ class ObbligatoFileDom {
 }
 
 /**
- * テンプレート展開用のDOM（部分要素）
+ * テンプレート展開用のDOM（部分要素）を展開・操作するためのクラス
  */
 class ObbligatoDom {
 
@@ -275,6 +275,10 @@ class ObbligatoDom {
 		$this->html_dom = & $my_dom;
 	}
 
+	/**
+	 * 文字列化
+	 * $html_domのすべてのOuterHTMLを返す
+	 */
 	public function __toString(){
 		$str_text = '';
 		foreach( $this->html_dom as $element ){
@@ -282,9 +286,10 @@ class ObbligatoDom {
 		}
 		return $str_text;
 	}
-	
+
 	/**
 	 * 抽出
+	 * @param $my_index 抽出の対象とする配列要素のインデックス
 	 */
 	public function get( $my_index ){
 		return new ObbligatoDom( $this->controller, $this->html_dom[$my_index] );
@@ -292,9 +297,10 @@ class ObbligatoDom {
 
 	/**
 	 * innerHTMLの取得
+	 * @return ObbligatoValuesのインスタンス
 	 */
 	public function html(){
-		$values = array();
+		$values = array( );
 		foreach( $this->html_dom as $element ){
 			array_push( $values, $element->innertext );
 		}
@@ -303,9 +309,10 @@ class ObbligatoDom {
 
 	/**
 	 * innerTextの取得
+	 * @return ObbligatoValuesのインスタンス
 	 */
 	public function text(){
-		$values = array();
+		$values = array( );
 		foreach( $this->html_dom as $element ){
 			array_push( $values, $element->innertext );
 		}
@@ -315,9 +322,10 @@ class ObbligatoDom {
 	/**
 	 * 属性値の取得
 	 * @param 対象の属性の名称
+	 * @return ObbligatoValuesのインスタンス
 	 */
 	public function attr( $my_attr_name ){
-		$values = array();
+		$values = array( );
 		foreach( $this->html_dom as $element ){
 			array_push( $values, $element->$my_attr_name );
 		}
@@ -326,6 +334,7 @@ class ObbligatoDom {
 
 	/**
 	 * 出力
+	 * 該当する全てのDOMのOuterHTMLを出力する
 	 */
 	public function write(){
 		echo $this->__toString();
@@ -334,11 +343,12 @@ class ObbligatoDom {
 }
 
 /**
- * テンプレート展開用のDOMを出力する
+ * テンプレート展開用のDOMの一部や値を出力するためのクラス
  */
 class ObbligatoValues {
+
 	private $values;
-	
+
 	/**
 	 * コンストラクタ
 	 * @param $my_values 値の配列
@@ -346,7 +356,11 @@ class ObbligatoValues {
 	public function __construct( $my_values ){
 		$this->values = & $my_values;
 	}
-	
+
+	/**
+	 * 文字列化
+	 * @return $valuesの値をすべて結合した文字列を返す
+	 */
 	public function __toString(){
 		$str_text = '';
 		foreach( $this->values as $value ){
@@ -357,6 +371,8 @@ class ObbligatoValues {
 
 	/**
 	 * 出力
+	 * @param $my_index 出力の対象とする配列要素のインデックス
+	 * 	インデックスの指定が無い場合は全てを出力する
 	 */
 	public function write( $my_index = null ){
 		if( $my_index == null ){
@@ -368,4 +384,5 @@ class ObbligatoValues {
 			return;
 		}
 	}
+
 }
