@@ -10,14 +10,22 @@
  * テンプレート埋め込み用クラス
  */
 class Obbligato {
-
+	
+	/** HTMLファイル全体のDOMのキャッシュを格納する配列 */
 	private $file_dom_caches = null;
+	
+	/**  */
 	private $topic_path_caches = null;
+	
+	/**  */
 	public $base_file_uri = null;
+	
+	/**  */
 	public $base_dir_path = null;
 
 	/**
 	 * コンストラクタ
+	 * @param $my_base_file_uri 対象HTMLファイルのコンテンツルートからのパス
 	 */
 	public function __construct( $my_base_file_uri ){
 		$this->base_file_uri = $my_base_file_uri;
@@ -63,7 +71,7 @@ class Obbligato {
 	 * ルートからの階層の取得
 	 * @return array ルートからの階層を ObbligatoDir の配列で表現したもの
 	 */
-	public function &path( $my_options ){
+	public function &path(){
 		if( $this->topic_path_caches == null ){
 			$this->topic_path_caches = array( );
 
@@ -74,14 +82,9 @@ class Obbligato {
 			$str_pathname = '';
 			for( $i = 0, $last = count( $arr_target_path ); $i < $last; $i++ ){
 				$str_pathname .= $arr_target_path[$i] . '/';
-
-				if( $i == 0 && isset( $my_options ) && isset( $my_options["root"] ) ){
-					$title_str = $my_options["root"];
-				}
-				else {
-					$title_str = $this->file( $str_pathname . 'index.html' )->find( 'title' )->get();
-				}
-
+				$title_str = $this->file( $str_pathname . 'index.html' )->find( 'title' )->text(0);
+				
+				// キャッシュに格納
 				array_push(
 					$this->topic_path_caches, new ObbligatoDir(
 						$title_str,
@@ -92,11 +95,12 @@ class Obbligato {
 			if( $str_filename != 'index.html' ){
 				array_push(
 					$this->topic_path_caches, new ObbligatoDir(
-						$this->file( $str_pathname . $str_filename )->find( 'title' )->get(),
+						$this->file( $str_pathname . $str_filename )->find( 'title' )->text(0),
 						$str_pathname . $str_filename
 					)
 				);
 			}
+			reset( $this->topic_path_caches )->is_root = true;
 			end( $this->topic_path_caches )->is_last = true;
 		}
 		return $this->topic_path_caches;
@@ -120,7 +124,7 @@ class ObbligatoDir {
 	public $dir_name = null;
 
 	/**
-	 * ドキュメントルートからのフルパス名：未実装
+	 * ドキュメントルートからのフルパス名
 	 */
 	public $full_path = null;
 
@@ -130,12 +134,19 @@ class ObbligatoDir {
 	public $rel_path = null;
 
 	/**
+	 * 最初の要素であることを示すフラグ
+	 */
+	public $is_root = false;
+
+	/**
 	 * 最後の要素であることを示すフラグ
 	 */
 	public $is_last = false;
 
 	/**
 	 * コンストラクタ
+	 * @param $my_title 階層の名称を示す文字列
+	 * @param $my_full_path ドキュメントルート（≠コンテンツルート）からのフルパス
 	 */
 	public function __construct( $my_title, $my_full_path ){
 		$this->title = $my_title;
@@ -238,7 +249,6 @@ class ObbligatoFileDom {
 	 */
 	function find( $my_selector ){
 		if( $this->html_dom == null ){
-			echo "huga<br>";
 			return;
 		}
 
@@ -259,31 +269,103 @@ class ObbligatoDom {
 	 * コンストラクタ
 	 * @param $my_controller OBBLIGATOオブジェクトの参照
 	 * @param $my_dom Simple HTML DOM Parserで得られるDOM
-	 * @param $my_file_path ファイルパス
 	 */
 	public function __construct( $my_controller = null, $my_dom = null ){
 		$this->controller = & $my_controller;
 		$this->html_dom = & $my_dom;
 	}
 
+	public function __toString(){
+		$str_text = '';
+		foreach( $this->html_dom as $element ){
+			$str_text .= $element->outertext;
+		}
+		return $str_text;
+	}
+	
 	/**
 	 * 抽出
 	 */
-	public function get(){
-		$str_text = '';
+	public function get( $my_index ){
+		return new ObbligatoDom( $this->controller, $this->html_dom[$my_index] );
+	}
+
+	/**
+	 * innerHTMLの取得
+	 */
+	public function html(){
+		$values = array();
 		foreach( $this->html_dom as $element ){
-			$str_text .= $element->innertext;
+			array_push( $values, $element->innertext );
 		}
-		return $str_text;
+		return new ObbligatoValues( $values );
+	}
+
+	/**
+	 * innerTextの取得
+	 */
+	public function text(){
+		$values = array();
+		foreach( $this->html_dom as $element ){
+			array_push( $values, $element->innertext );
+		}
+		return new ObbligatoValues( $values );
+	}
+
+	/**
+	 * 属性値の取得
+	 * @param 対象の属性の名称
+	 */
+	public function attr( $my_attr_name ){
+		$values = array();
+		foreach( $this->html_dom as $element ){
+			array_push( $values, $element->$my_attr_name );
+		}
+		return new ObbligatoValues( $values );
 	}
 
 	/**
 	 * 出力
 	 */
 	public function write(){
-		echo $this->get();
+		echo $this->__toString();
 	}
 
 }
 
-?>
+/**
+ * テンプレート展開用のDOMを出力する
+ */
+class ObbligatoValues {
+	private $values;
+	
+	/**
+	 * コンストラクタ
+	 * @param $my_values 値の配列
+	 */
+	public function __construct( $my_values ){
+		$this->values = & $my_values;
+	}
+	
+	public function __toString(){
+		$str_text = '';
+		foreach( $this->values as $value ){
+			$str_text .= $value . ' ';
+		}
+		return rtrim( $str_text );
+	}
+
+	/**
+	 * 出力
+	 */
+	public function write( $my_index = null ){
+		if( $my_index == null ){
+			echo $this->__toString();
+			return;
+		}
+		else if( isset( $this->values[$my_index] ) ){
+			echo $this->values[$my_index];
+			return;
+		}
+	}
+}

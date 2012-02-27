@@ -8,6 +8,7 @@
 require_once( "config.php" );
 require_once( PATH_SIMPLE_HTML_DOM );
 require_once( "obbligato.php" );
+require_once( "tags.php" );
 
 /**
  * 初期化

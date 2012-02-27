@@ -3,12 +3,12 @@
 	<head>
 		<meta charset="UTF-8" />
 
-		<title><?php $OBBLIGATO->file(PAGE)->find("title")->write(); ?> | <?php $OBBLIGATO->file(ROOT)->find("title")->write(); ?></title>
+		<title><?php $OBBLIGATO->file(PAGE)->find("title")->text()->write(); ?> | <?php $OBBLIGATO->file(ROOT)->find("title")->text()->write(); ?></title>
 		<link rel="stylesheet" type="text/css" href="/common/css/common.css">
 	</head>
-	<body>
+	<body class="<?php $OBBLIGATO->file(PAGE)->find('body')->attr('class')->write(0); ?>">
 		<header>
-			<h1><a href="/"><?php $OBBLIGATO->file(ROOT)->find("h1")->write() ?></a></h1>
+			<h1><a href="/"><?php $OBBLIGATO->file(ROOT)->find("h1")->html()->write() ?></a></h1>
 		</header>
 
 		<nav>
@@ -20,20 +20,14 @@
 
 		<div id="topicPath">
 <?php
-	foreach( $OBBLIGATO->path( array( "root"=>"HOME" ) ) as $index => $dir ){
-		if( !$dir->is_last ) {
-			echo ' &gt; ' . '<a href="' . $dir->full_path . '">' . $dir->title . '</a>';
-		} else {
-			echo ' &gt; ' . $dir->title;
-		}
-	}
+	topic_path( $OBBLIGATO, array( 'root'=>'HOME' ) );
 ?>
 		</div>
 
 		<div id="body_text">
 			<article>
 <?php
-	$OBBLIGATO->file(PAGE)->find("article")->write();
+	$OBBLIGATO->file(PAGE)->find("article")->html()->write();
 ?>
 
 			</article>
@@ -43,7 +37,7 @@
 			<section>
 				<h2>Local Nav</h2>
 <?php
-	$OBBLIGATO->file(PARENT)->find("aside nav")->write();
+	$OBBLIGATO->file(PARENT)->find("aside nav")->html()->write();
 ?>
 			</section>
 
@@ -51,17 +45,17 @@
 				<h2>Aside Info</h2>
 <?php
 	if( INDEX != PAGE ){
-		$OBBLIGATO->file(INDEX)->find("aside nav")->write();
+		$OBBLIGATO->file(INDEX)->find("aside nav")->html()->write();
 	}
 ?>
 <?php
-	$OBBLIGATO->file(PAGE)->find("aside")->write();
+	$OBBLIGATO->file(PAGE)->find("aside")->html()->write();
 ?>
 			</section>
 		</aside>
 
 		<footer>
-			<small>&copy;2011</small>
+			<small>&copy;2012</small>
 		</footer>
 	</body>
 </html>
