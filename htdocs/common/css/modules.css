@@ -1,0 +1,32 @@
+@charset "UTF-8";
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+◆本文要素
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+	#body_text article section {
+	}
+
+	#body_text article > section {
+		margin-top: 3em;
+		padding: 0 0 0 10px;
+	}
+	#body_text article > section > section {
+		margin-top: 2em;
+		padding: 0 0 0 10px;
+	}
+
+	#body_text article h1 {
+		margin-top: 0;
+	}
+	#body_text article h2 {
+		margin: 0 0 0 -10px;
+		padding: 5px 10px;
+		background: #f3ecd8;
+	}
+	#body_text article h3 {
+		margin: 0 0 0 -20px;
+		padding-left: 5px;
+		border-left: solid 15px #f3ecd8;
+
+	}
+

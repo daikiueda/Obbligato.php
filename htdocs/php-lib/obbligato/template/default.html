@@ -1,14 +1,20 @@
 <!DOCTYPE html>
-<html>
+<!--[if lt IE 7]><html class="no-js ie6 oldie" lang="ja"><![endif]-->
+<!--[if IE 7]>   <html class="no-js ie7 oldie" lang="ja"><![endif]-->
+<!--[if IE 8]>   <html class="no-js ie8 oldie" lang="ja"><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" lang="ja"><!--<![endif]-->
 	<head>
-		<meta charset="UTF-8" />
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width">
 
 		<title><?php $OBBLIGATO->file(PAGE)->find("title")->text()->write(); ?> | <?php $OBBLIGATO->file(ROOT)->find("title")->text()->write(); ?></title>
 		<link rel="stylesheet" type="text/css" href="/common/css/common.css">
+		<script src="/common/js/modernizr-2.5.3.min.js"></script>
 	</head>
 	<body class="<?php $OBBLIGATO->file(PAGE)->find('body')->attr('class')->write(0); ?>">
 		<header>
-			<h1><a href="/"><?php $OBBLIGATO->file(ROOT)->find("h1")->html()->write() ?></a></h1>
+			<h1><a href="/"><?php $OBBLIGATO->file(ROOT)->find("title")->text()->write() ?></a></h1>
 		</header>
 
 		<nav>
@@ -18,31 +24,30 @@
 			</ul>
 		</nav>
 
-		<div id="topicPath">
+		<div id="local">
+			<div id="topicPath">
 <?php
 	topic_path( $OBBLIGATO, array( 'root'=>'HOME' ) );
 ?>
-		</div>
+			</div>
 
-		<div id="body_text">
 			<article>
 <?php
 	$OBBLIGATO->file(PAGE)->find("article")->html()->write();
 ?>
 
 			</article>
-		</div>
 
-		<aside>
-			<section>
-				<h2>Local Nav</h2>
+			<aside>
+				<section>
+					<h2>Local Nav</h2>
 <?php
 	$OBBLIGATO->file(PARENT)->find("aside nav")->html()->write();
 ?>
-			</section>
+				</section>
 
-			<section>
-				<h2>Aside Info</h2>
+				<section>
+					<h2>Aside Info</h2>
 <?php
 	if( INDEX != PAGE ){
 		$OBBLIGATO->file(INDEX)->find("aside nav")->html()->write();
@@ -51,8 +56,9 @@
 <?php
 	$OBBLIGATO->file(PAGE)->find("aside")->html()->write();
 ?>
-			</section>
-		</aside>
+				</section>
+			</aside>
+		</div>
 
 		<footer>
 			<small>&copy;2012</small>
