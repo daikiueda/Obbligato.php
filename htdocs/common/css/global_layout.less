@@ -1,0 +1,261 @@
+@charset "UTF-8";
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+◆全体の枠組み
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* =========================================================
+■共通装飾
+========================================================= */
+/* -------------------------------------
+▽基本色
+------------------------------------- */
+@textColor: #333;
+@linkColor: #36c;
+
+/* -------------------------------------
+▽余白
+------------------------------------- */
+@sideSpace: 20px;
+@elmMarginBottom: 1.5em;
+
+/* -------------------------------------
+▽リンクボタン
+------------------------------------- */
+.linkButton( @backgroundColor: @linkColor ) {
+	display: block;
+	
+	border-radius: 2px;
+	
+	background: -moz-linear-gradient(-45deg,  rgba(76,76,76,0.25) 0%, rgba(89,89,89,0.25) 12%, rgba(102,102,102,0.25) 25%, rgba(71,71,71,0.25) 39%, rgba(44,44,44,0.25) 50%, rgba(0,0,0,0.25) 51%, rgba(17,17,17,0.25) 60%, rgba(43,43,43,0.25) 76%, rgba(28,28,28,0.25) 91%, rgba(19,19,19,0.25) 100%), @backgroundColor;
+	background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(76,76,76,0.25)), color-stop(12%,rgba(89,89,89,0.25)), color-stop(25%,rgba(102,102,102,0.25)), color-stop(39%,rgba(71,71,71,0.25)), color-stop(50%,rgba(44,44,44,0.25)), color-stop(51%,rgba(0,0,0,0.25)), color-stop(60%,rgba(17,17,17,0.25)), color-stop(76%,rgba(43,43,43,0.25)), color-stop(91%,rgba(28,28,28,0.25)), color-stop(100%,rgba(19,19,19,0.25))), @backgroundColor;
+	background: -webkit-linear-gradient(-45deg,  rgba(76,76,76,0.25) 0%,rgba(89,89,89,0.25) 12%,rgba(102,102,102,0.25) 25%,rgba(71,71,71,0.25) 39%,rgba(44,44,44,0.25) 50%,rgba(0,0,0,0.25) 51%,rgba(17,17,17,0.25) 60%,rgba(43,43,43,0.25) 76%,rgba(28,28,28,0.25) 91%,rgba(19,19,19,0.25) 100%), @backgroundColor;
+	background: -o-linear-gradient(-45deg,  rgba(76,76,76,0.25) 0%,rgba(89,89,89,0.25) 12%,rgba(102,102,102,0.25) 25%,rgba(71,71,71,0.25) 39%,rgba(44,44,44,0.25) 50%,rgba(0,0,0,0.25) 51%,rgba(17,17,17,0.25) 60%,rgba(43,43,43,0.25) 76%,rgba(28,28,28,0.25) 91%,rgba(19,19,19,0.25) 100%), @backgroundColor;
+	background: -ms-linear-gradient(-45deg,  rgba(76,76,76,0.25) 0%,rgba(89,89,89,0.25) 12%,rgba(102,102,102,0.25) 25%,rgba(71,71,71,0.25) 39%,rgba(44,44,44,0.25) 50%,rgba(0,0,0,0.25) 51%,rgba(17,17,17,0.25) 60%,rgba(43,43,43,0.25) 76%,rgba(28,28,28,0.25) 91%,rgba(19,19,19,0.25) 100%), @backgroundColor;
+	background: linear-gradient(-45deg,  rgba(76,76,76,0.25) 0%,rgba(89,89,89,0.25) 12%,rgba(102,102,102,0.25) 25%,rgba(71,71,71,0.25) 39%,rgba(44,44,44,0.25) 50%,rgba(0,0,0,0.25) 51%,rgba(17,17,17,0.25) 60%,rgba(43,43,43,0.25) 76%,rgba(28,28,28,0.25) 91%,rgba(19,19,19,0.25) 100%), @backgroundColor;
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#404c4c4c', endColorstr='#40131313',GradientType=1 );
+	
+	box-shadow: inset 0px 0px 1px rgba(255,255,255,0.75), inset 0px 0px 4px rgba(255,255,255,0.1), 0px 4px 4px rgba(0,0,0,0.25);
+	
+	text-decoration: none;
+	color: #eee;
+	text-shadow: 0 1px 1px #333;
+}
+
+
+/* =========================================================
+■レイアウト
+========================================================= */
+	body {
+		background: #666;
+		color: @textColor;
+	}
+
+	body > header,
+	body > nav ul {
+		margin: 0 auto;
+		padding: 0 @sideSpace;
+	}
+
+	body > header {
+		padding-top: 20px;
+		padding-bottom: 10px;
+		background: #fff;
+		
+		position: relative;
+	}
+	body > header h1 {
+		margin: 0;
+	}
+	body > header h1 a {
+		color: @textColor;
+		text-decoration: none;
+	}
+	body > header div.toSiteTop {
+		position: absolute;
+		top: 20px; right: @sideSpace;
+	}
+	body > header div.toSiteTop a {
+		padding: 5px 10px;
+		.linkButton();
+	}
+
+	body > nav {
+		padding: 10px 0 20px;
+		background: #f3ecd8;
+		background: #c66;
+		background: #36c;
+
+		box-shadow: inset 0px 4px 4px rgba(0,0,0,0.25);
+	}
+	body > nav h1 {
+		margin: 0;
+		font-size: 100%;
+	}
+	body > nav h1 a {
+		padding: 5px @sideSpace;
+		.linkButton;
+	}
+	body > nav ul {
+		margin: 0;
+		padding: 0;
+	}
+	body > nav ul li {
+	}
+	body > nav ul li a {
+		padding: 10px @sideSpace;
+		.linkButton( transparent );
+	}
+	body > nav ul li a:hover {
+	}
+
+	#local {
+		margin: -10px 8px @elmMarginBottom;
+		
+		border-radius: 2px;
+		background: #fff;
+		box-shadow: 0px 4px 4px rgba(0,0,0,0.5);
+	}
+
+	#topicPath {
+		padding: @sideSpace @sideSpace 0;
+	}
+	#topicPath a {
+	}
+
+	#local > article {
+		padding: 0 @sideSpace @sideSpace;
+	}
+	#local > aside {
+		padding: @sideSpace;
+		background: #f3ecd8;
+	}
+
+	#local > aside > section {
+		margin-top: @elmMarginBottom;
+	}
+	#local > aside > section:first-child {
+		margin-top: 0;
+	}
+
+	#local > aside h2 {
+		margin: 0;
+	}
+
+	#local > aside ul {
+		margin: 0 0 1em;
+		padding: 0 0 0 1em;
+	}
+	#local > aside > *:last-child,
+	#local > aside > *:last-child *:last-child {
+		margin-bottom: 0;
+	}
+
+	body > footer {
+		margin: 0 8px;
+		text-align: center;
+		color: #fff;
+	}
+
+@media only screen and (min-width: 480px) {
+}
+ 
+@media only screen and (min-width: 768px) {
+	body {
+		overflow-x: hidden;
+	}
+	
+	body > header,
+	body > nav ul,
+	#local,
+	body > footer {
+		width: 728px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	#local {
+		width: 768px;
+	}
+
+	body > header:after {
+		content: "";
+		
+		display: block;
+		height: 100%;
+		width: 3000px;
+		
+		position: absolute;
+		top: 0; right: -1000px;
+		z-index: -1;
+		
+		background: #fff;
+	}
+
+	body > nav {
+		padding: 10px 0 ;
+	}
+	body > nav h1 {
+		display: none;
+	}
+	body > nav ul {
+		zoom: 1;
+	}
+	body > nav ul:after {
+		content: ".";
+		height: 0; display: block; visibility: hidden;
+		clear: both;
+	}
+	body > nav ul li {
+		float: left;
+		margin-right: 2px;
+	}
+	body > nav ul li a {
+		padding-top: @sideSpace;
+	}
+
+	#local {
+		margin-top: -15px;
+	}
+	#local:after {
+		content: ".";
+		height: 0; display: block; visibility: hidden;
+		clear: both;
+	}
+
+	#topicPath {
+		background: #f0f0f0;
+		box-shadow: inset 0 -10px 20px #f9f9f9;
+	}
+	#topicPath:after {
+		content: "";
+		display: block;
+		margin: 10px -@sideSpace 0;
+		
+		border-top: solid 1px #e9e9e9;
+		border-bottom: solid 1px #f9f9f9;
+	}
+
+	#local article {
+		float: left;
+		width: 504px; /* 544 - 20*2 */
+	}
+	#local aside {
+		float: right;
+		width: 184px; /* 224 - 20*2 */
+	}
+}
+@media only screen and (min-width: 960px) {
+	body > header,
+	body > nav ul,
+	body > footer {
+		width: 920px;
+	}
+	#local {
+		width: 960px;
+	}
+	#local article {
+		width: 638px; /* 678 - 20*2 */
+	}
+	#local aside {
+		width: 242px; /* 282 - 20*2 */
+	}
+}

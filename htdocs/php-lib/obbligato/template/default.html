@@ -9,15 +9,22 @@
 		<meta name="viewport" content="width=device-width">
 
 		<title><?php $OBBLIGATO->file(PAGE)->find("title")->text()->write(); ?> | <?php $OBBLIGATO->file(ROOT)->find("title")->text()->write(); ?></title>
-		<link rel="stylesheet" type="text/css" href="/common/css/common.css">
+		<link rel="stylesheet/less" type="text/css" href="/common/css/common.less">
+		<script> try { localStorage.clear(); } catch( myEx ){}</script>
 		<script src="/common/js/modernizr-2.5.3.min.js"></script>
+		<script src="/common/js/less-1.2.2.min.js"></script>
 	</head>
 	<body class="<?php $OBBLIGATO->file(PAGE)->find('body')->attr('class')->write(0); ?>">
 		<header>
 			<h1><a href="/"><?php $OBBLIGATO->file(ROOT)->find("title")->text()->write() ?></a></h1>
+			
+			<div class="toSiteTop">
+				<a href="/">HOME</a>
+			</div>
 		</header>
 
-		<nav>
+		<nav id="menu">
+			<h1><a href="#menu">GRAND MENU</a></h1>
 			<ul>
 				<li><a href="/sample_category_1/">Sample Category 1</a></li>
 				<li><a href="/sample_category_2/">Sample Category 2</a></li>
