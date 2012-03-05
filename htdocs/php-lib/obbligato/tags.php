@@ -27,10 +27,38 @@ function topic_path( $my_obbligato, $my_options = null ){
 			echo $separator;
 		}
 		if( !$dir->is_last ){
-			echo '<a href="' . $dir->full_path . '">' . $title_str . '</a>';
+			echo '<a href="' . PATH_CONTENTS_ROOT_DIR . $dir->full_path . '">' . $title_str . '</a>';
 		}
 		else {
 			echo $title_str;
 		}
 	}
 }
+
+
+/**
+ * 上位階層へのリンクの生成
+ * @param $my_obbligato Obbligatoクラスのインスタンス
+ */
+function lineage_path( $my_obbligato, $my_options = null ){
+	echo '<ol>';
+	foreach( $my_obbligato->path() as $index => $dir ){
+
+		if( $dir->is_root ){
+			continue;
+		}
+		else {
+			echo '<li>';
+			echo '<div><a href="' . PATH_CONTENTS_ROOT_DIR . $dir->full_path . '">' . trim( $dir->title ) . '</a></div>';
+			
+			if( !$dir->is_index ){
+				$my_obbligato->file( $dir->full_path )->find( "body > aside ul.children" )->write();
+			}
+			
+			echo '</li>';
+		}
+	}
+	echo '</ol>';
+}
+
+

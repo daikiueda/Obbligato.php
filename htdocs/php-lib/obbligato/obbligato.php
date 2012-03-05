@@ -88,10 +88,11 @@ class Obbligato {
 				array_push(
 					$this->topic_path_caches, new ObbligatoDir(
 						$title_str,
-						PATH_CONTENTS_ROOT_DIR . $str_pathname . 'index.html'
+						$str_pathname . 'index.html'
 					)
 				);
 			}
+			end( $this->topic_path_caches )->is_index = true;
 			if( $str_filename != 'index.html' ){
 				array_push(
 					$this->topic_path_caches, new ObbligatoDir(
@@ -142,6 +143,11 @@ class ObbligatoDir {
 	 * 最後の要素であることを示すフラグ
 	 */
 	public $is_last = false;
+
+	/**
+	 * ディレクトリのインデックスであることを示すフラグ
+	 */
+	public $is_index = false;
 
 	/**
 	 * コンストラクタ
