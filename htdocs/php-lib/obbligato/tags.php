@@ -17,12 +17,21 @@ function topic_path( $my_obbligato, $my_options = null ){
 	$separator = ( isset( $my_options ) && isset( $my_options['separator'] ) ) ?
 		$my_options['separator'] : ' &gt; ';
 
+	echo '<ol>';
 	foreach( $my_obbligato->path() as $index => $dir ){
 
 		$title_str = ( $dir->is_root && isset( $my_options ) && isset( $my_options['root'] ) ) ?
 			$my_options['root'] : $dir->title;
 		$title_str = trim( $title_str ); //TODO trimの必要の有無・場所の確認
 
+		$arr_classnames = array();
+		if( $dir->is_prev ){
+			array_push( $arr_classnames, "prev" );
+		}
+		$str_classname = ( count( $arr_classnames) > 0 )?
+			' class="' . join( ' ', $arr_classnames ) . '"': '';
+
+		echo '<li' . $str_classname . '>';
 		if( !$dir->is_root ){
 			echo $separator;
 		}
@@ -32,7 +41,9 @@ function topic_path( $my_obbligato, $my_options = null ){
 		else {
 			echo $title_str;
 		}
+		echo '</li>';
 	}
+	echo '</ol>';
 }
 
 
@@ -50,11 +61,11 @@ function lineage_path( $my_obbligato, $my_options = null ){
 		else {
 			echo '<li>';
 			echo '<div><a href="' . PATH_CONTENTS_ROOT_DIR . $dir->full_path . '">' . trim( $dir->title ) . '</a></div>';
-			
+
 			if( !$dir->is_index ){
 				$my_obbligato->file( $dir->full_path )->find( "body > aside ul.children" )->write();
 			}
-			
+
 			echo '</li>';
 		}
 	}

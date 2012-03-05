@@ -103,6 +103,10 @@ class Obbligato {
 			}
 			reset( $this->topic_path_caches )->is_root = true;
 			end( $this->topic_path_caches )->is_last = true;
+			$prev = prev( $this->topic_path_caches );
+			if( $prev ){
+				$prev->is_prev = true;
+			}
 		}
 		return $this->topic_path_caches;
 	}
@@ -148,6 +152,11 @@ class ObbligatoDir {
 	 * ディレクトリのインデックスであることを示すフラグ
 	 */
 	public $is_index = false;
+
+	/**
+	 * トピックパス上で直前の要素であることを示すフラグ
+	 */
+	public $is_prev = false;
 
 	/**
 	 * コンストラクタ
